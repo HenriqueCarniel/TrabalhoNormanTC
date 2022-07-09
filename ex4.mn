@@ -1,0 +1,54 @@
+// Limpa variável
+operation clear(A){
+    1: if zero A then goto 0 else goto 2
+    2: do dec A goto 1
+}
+
+// A += B (soma destrutiva)
+operation sumDest(A,B){
+    1: if zero B then goto 0 else goto 2
+    2: do dec B goto 3
+    3: do inc A goto 1
+}
+
+// A = B (atribuição destrutiva)
+operation movDest(A,B){
+    1: do clear(A) goto 2
+    2: if zero B then goto 0 else goto 3
+    3: do sumDest(A,B) goto 0
+}
+
+// A += B usando C
+operation sum(A,B,C){
+    1: if zero B then goto 5 else goto 2
+    2: do dec  B goto 3
+    3: do inc  A goto 4
+    4: do inc  C goto 1
+    5: do sumDest(B,C) goto 0
+}
+
+// A ?= 1
+test one(A){
+    1: if zero A then goto false else goto 2
+    2: do dec A goto 3
+    3: if zero A then goto 4 else goto 5
+    4: do inc A goto true
+    5: do inc A goto false
+}
+
+// Programa principal
+main {
+    1: do inc R1 goto 2
+    2: do inc R1 goto 3
+    3: do inc R2 goto 4
+    4: do inc RX goto 5
+    5: do sum(RX,R1,A) goto 6
+    6: do dec X goto 7
+    7: if one(X) then goto 8 else goto 9
+    8: do movDest(Y,RX) goto 0
+    9: do sum(R1,R2,A) goto 10
+    10: do sum(RX,R2,A) goto 11
+    11: do dec X goto 12
+    12: if one(X) then goto 8 else goto 13
+    13: do sum(R2,R1,A) goto 5
+}
