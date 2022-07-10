@@ -1,0 +1,57 @@
+// Limpa variável
+operation clear(A){
+    1: if zero A then goto 0 else goto 2
+    2: do dec A goto 1
+}
+
+// A += B (soma destrutiva)
+operation sumDest(A,B){
+    1: if zero B then goto 0 else goto 2
+    2: do dec B goto 3
+    3: do inc A goto 1
+}
+
+// A = B (atribuição destrutiva)
+operation movDest(A,B){
+    1: do clear(A) goto 2
+    2: do sumDest(A,B) goto 0
+}
+
+// A += B usando C
+operation sum(A,B,C){
+    1: if zero B then goto 5 else goto 2
+    2: do dec  B goto 3
+    3: do inc  A goto 4
+    4: do inc  C goto 1
+    5: do sumDest(B,C) goto 0
+}
+
+// A = B usando C (atribuição não-destrutiva)
+operation mov(A,B,C){
+  1: do clear(A) goto 2
+  2: do sum(A,B,C) goto 0
+}
+
+// A % 4 =? 0
+test divBy4(A,C){
+    1: do movDest(C,A) goto 2
+    2: if zero C then goto true else goto 3
+    3: do dec C goto 4
+    4: do inc A goto 5
+    5: if zero C then goto false else goto 6
+    6: do dec C goto 7
+    7: do inc A goto 8
+    8: if zero C then goto false else goto 9
+    9: do dec C goto 10
+    10: do inc A goto 11
+    11: if zero C then goto false else goto 12
+    12: do dec C goto 13
+    13: do inc A goto 2
+}
+
+main {
+    1: do mov(A,X,C) goto 2
+    2: if divBy4(A,C) then goto 3 else goto 4
+    3: do inc Y goto 0
+    4: do clear(Y) goto 0
+}
