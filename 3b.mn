@@ -115,7 +115,8 @@ operation decod(C){
 main {
     1: do movDest(C,X) goto 2
     2: do decod(C) goto 3
-    3: if zero A then goto 5 else goto 4 
+    3: if zero A then goto 6 else goto 4 
     4: do divDown(B,A,C,D,E,F) goto 5
     5: do movDest(Y,B) goto 0
+    6: do clear(Y) goto 0
 }
